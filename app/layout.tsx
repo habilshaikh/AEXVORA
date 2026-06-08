@@ -12,15 +12,15 @@ const cormorant = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
-  title: 'AETHER — The T-Shirt, Reimagined',
+  title: 'Aexvora Services & Consulting',
   description:
-    'AETHER ONE. A revolutionary garment engineered like technology. Cinematic 3D reveal of the worlds most advanced T-shirt.',
+    'Comprehensive digital services including SEO, Ads Management, Influencer Marketing, and Data Intelligence Consulting.',
   generator: 'v0.app',
 }
 
 export const viewport: Viewport = {
-  themeColor: '#1a1410',
-  colorScheme: 'light',
+  themeColor: '#000000',
+  colorScheme: 'dark',
 }
 
 export default function RootLayout({
@@ -29,9 +29,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-espresso">
+    <html lang="en" className="bg-black text-white">
       <body
-        className={`${geist.variable} ${geistMono.variable} ${cormorant.variable} font-sans antialiased`}
+        className={`${geist.variable} ${geistMono.variable} ${cormorant.variable} font-sans antialiased bg-black text-white`}
       >
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
