@@ -1,5 +1,6 @@
 'use client'
 
+import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import NextLink from 'next/link'
 import {
@@ -14,8 +15,6 @@ import {
   Package,
   Database,
   FileText,
-  ArrowUpRight,
-  Sparkles,
 } from 'lucide-react'
 
 const fade = {
@@ -23,10 +22,10 @@ const fade = {
   show: { opacity: 1, y: 0 },
 }
 
-function Kicker({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
+function Kicker({ children, dark }: { children: ReactNode; dark?: boolean }) {
   return (
     <span
-      className={`mb-6 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-widest ${
+      className={`mb-3 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-widest md:mb-6 ${
         dark ? 'text-white/60' : 'text-white/70'
       }`}
     >
@@ -40,7 +39,7 @@ function Section({
   children,
   align = 'left',
 }: {
-  children: React.ReactNode
+  children: ReactNode
   align?: 'left' | 'right' | 'center'
 }) {
   const justify =
@@ -49,8 +48,9 @@ function Section({
       : align === 'right'
         ? 'items-end text-right'
         : 'items-start text-left'
+
   return (
-    <section className="flex h-screen w-full snap-start items-center px-6 md:px-16 lg:px-24">
+    <section className="flex min-h-[70vh] w-full snap-start scroll-mt-24 items-center px-6 py-16 md:h-screen md:px-16 md:py-0 lg:px-24">
       <div className={`flex w-full flex-col ${justify}`}>
         <div className="max-w-xl">{children}</div>
       </div>
@@ -110,7 +110,6 @@ const allServices = [
 export function Overlay() {
   return (
     <div id="home" className="w-full text-white">
-      {/* HERO */}
       <Section align="center">
         <motion.div
           initial="hidden"
@@ -123,23 +122,29 @@ export function Overlay() {
           <motion.h1
             variants={fade}
             transition={{ duration: 0.9 }}
-            className="text-balance font-serif text-6xl font-light leading-[0.95] text-white md:text-8xl lg:text-9xl drop-shadow-2xl"
+            className="text-balance font-serif text-6xl font-light leading-[0.95] text-white drop-shadow-2xl md:text-8xl lg:text-9xl"
           >
             Aexvora
             <br />
-            <span className="italic text-white/50">Excellence.</span>
+            <motion.span
+              animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+              className="bg-gradient-to-r from-white/40 via-white to-white/40 bg-[length:200%_auto] bg-clip-text italic text-transparent"
+            >
+              Excellence.
+            </motion.span>
           </motion.h1>
           <motion.p
             variants={fade}
             transition={{ duration: 0.9 }}
-            className="mx-auto mt-8 max-w-md text-pretty text-base leading-relaxed text-white/70 md:text-lg"
+            className="mx-auto mt-4 max-w-md text-pretty text-base leading-relaxed text-white/70 md:mt-8 md:text-lg"
           >
             Engineered for scale. Reimagined for the modern web. Discover our premium suite of consulting and marketing services.
           </motion.p>
           <motion.div
             variants={fade}
             transition={{ duration: 0.9 }}
-            className="mt-12 flex flex-col items-center gap-3"
+            className="mt-8 flex flex-col items-center gap-3 md:mt-12"
           >
             <span className="text-[10px] uppercase tracking-widest text-white/50">
               Scroll to reveal
@@ -153,57 +158,80 @@ export function Overlay() {
         </motion.div>
       </Section>
 
-      {/* FEATURE SCENES */}
-      {features.map((f) => {
-        return (
-          <Section key={f.tag} align={f.align}>
+      {features.map((f, i) => (
+        <Section key={f.tag} align={f.align}>
+          <motion.div
+            variants={fade}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.8 }}
+            className="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 backdrop-blur-xl md:rounded-3xl md:p-10"
+          >
             <motion.div
-              variants={fade}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.8 }}
-              className="bg-neutral-900/40 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-10"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: i * 0.2 }}
+              className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 text-white md:mb-6 md:h-12 md:w-12 md:rounded-2xl"
             >
-              <div
-                className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 text-white"
-              >
-                <f.icon className="h-5 w-5" />
-              </div>
-              <Kicker dark={f.dark}>{f.tag}</Kicker>
-              <h2
-                className="text-balance font-serif text-4xl font-light leading-tight md:text-6xl text-white"
-              >
-                {f.title}
-              </h2>
-              <p className="mt-5 text-pretty leading-relaxed md:text-lg text-white/70">
-                {f.body}
-              </p>
+              <f.icon className="h-5 w-5" />
             </motion.div>
-          </Section>
-        )
-      })}
+            <Kicker dark={f.dark}>{f.tag}</Kicker>
+            <h2 className="text-balance font-serif text-4xl font-light leading-tight text-white md:text-6xl">
+              {f.title}
+            </h2>
+            <p className="mt-3 text-pretty leading-relaxed text-white/70 md:mt-5 md:text-lg">
+              {f.body}
+            </p>
+            <div className="mt-6 md:mt-8">
+              <button
+                onClick={() => window.open(`https://wa.me/919219714827?text=Hello Aexvora! I am interested in your ${encodeURIComponent(f.title)} service.`, '_blank')}
+                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-[11px] font-medium uppercase tracking-widest text-black transition-transform hover:scale-105"
+              >
+                Inquire Now
+              </button>
+            </div>
+          </motion.div>
+        </Section>
+      ))}
 
-      {/* SHOP COLLECTION */}
-      <section id="services-section" className="flex min-h-screen w-full snap-start flex-col justify-center px-6 py-24 md:px-16 lg:px-24">
+      <section id="about-section" className="flex min-h-[70vh] w-full snap-start scroll-mt-24 flex-col justify-center px-6 py-16 md:min-h-screen md:px-16 md:py-0 lg:px-24">
         <motion.div
           variants={fade}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.8 }}
-          className="mb-14 max-w-2xl"
+          className="max-w-3xl"
+        >
+          <Kicker dark>About Us</Kicker>
+          <h2 className="text-balance font-serif text-5xl font-light leading-tight text-white md:text-7xl">
+            Who we are.
+          </h2>
+          <p className="mt-3 text-pretty leading-relaxed text-white/70 md:mt-5 md:text-lg">
+            We are a premium digital agency specializing in search engine optimization, paid media, and strategic marketing. Our goal is to engineer comprehensive digital strategies tailored to scale your business and drive exceptional results.
+          </p>
+        </motion.div>
+      </section>
+
+      <section id="services-section" className="flex min-h-screen w-full snap-start scroll-mt-24 flex-col justify-center px-6 py-12 md:px-16 md:py-24 lg:px-24">
+        <motion.div
+          variants={fade}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8 }}
+          className="mb-8 max-w-2xl md:mb-14"
         >
           <Kicker dark>All Services</Kicker>
           <h2 className="text-balance font-serif text-5xl font-light leading-tight text-white md:text-7xl">
             Elevate your business.
           </h2>
-          <p className="mt-5 max-w-lg text-pretty leading-relaxed text-white/65 md:text-lg">
+          <p className="mt-3 max-w-lg text-pretty leading-relaxed text-white/65 md:mt-5 md:text-lg">
             A comprehensive suite of digital marketing, design, and consulting services tailored to scale your brand.
           </p>
         </motion.div>
 
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
           {allServices.map((p, i) => (
             <motion.article
               key={p.name}
@@ -213,37 +241,51 @@ export function Overlay() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, delay: i * 0.05 }}
               whileHover={{ y: -5 }}
-              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/30 backdrop-blur-md p-7"
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/30 p-4 backdrop-blur-md md:rounded-3xl md:p-7"
             >
-              <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-white/10 blur-3xl transition-opacity duration-500 group-hover:opacity-100 opacity-0" />
-              <div className="mb-8 flex items-center justify-between">
+              <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-white/10 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="mb-4 flex items-center justify-between md:mb-8">
                 <span className="text-[10px] uppercase tracking-widest text-white/50">
                   {p.spec}
                 </span>
-                <p.icon className="h-4 w-4 text-white/70 group-hover:text-white transition-colors" />
+                <p.icon className="h-4 w-4 text-white/70 transition-colors group-hover:text-white" />
               </div>
-              <h3 className="font-serif text-xl font-light text-white md:text-2xl mt-4">
+              <h3 className="mt-2 font-serif text-lg font-light text-white md:mt-4 md:text-2xl">
                 {p.name}
               </h3>
-              <div className="mt-8 flex items-end justify-between opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <NextLink 
-                  href={`/services/${encodeURIComponent(p.name.toLowerCase().replace(/ /g, '-'))}`}
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[10px] font-medium uppercase tracking-wider text-black transition-transform duration-300 hover:scale-105"
-                >
-                  Explore
-                  <ArrowUpRight className="h-3 w-3" />
-                </NextLink>
+              <div className="mt-4 flex translate-y-0 items-end justify-between opacity-100 transition-all duration-300 md:mt-8 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+                <div className="flex w-full justify-between gap-2">
+                  <NextLink
+                    href={`/services/${encodeURIComponent(p.name.toLowerCase().replace(/ /g, '-'))}`}
+                    className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-white transition-colors duration-300 hover:bg-white hover:text-black"
+                  >
+                    Explore
+                  </NextLink>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault()
+                      window.open(`https://wa.me/919219714827?text=Hello Aexvora! I am interested in your ${encodeURIComponent(p.name)} service.`, '_blank')
+                    }}
+                    className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-black transition-transform duration-300 hover:scale-105"
+                  >
+                    Inquire <MessageSquare className="h-3 w-3" />
+                  </button>
+                </div>
               </div>
             </motion.article>
           ))}
         </div>
 
-        <footer className="mt-24 flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-10 text-center md:flex-row md:text-left">
-          <span className="font-serif text-xl text-white">AEXVORA</span>
-          <p className="text-xs uppercase tracking-widest text-white/50">
-            Premium Services & Consulting
-          </p>
-          <span className="text-xs text-white/50">© 2026 Aexvora</span>
+        <footer className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-center md:mt-24 md:flex-row md:gap-6 md:pt-10 md:text-left">
+          <div>
+            <span className="font-serif text-xl text-white">AEXVORA</span>
+            <p className="mt-1 text-xs uppercase tracking-widest text-white/50">
+              Premium Services & Consulting
+            </p>
+          </div>
+          <span className="text-xs uppercase tracking-widest text-white/45">
+            &copy; 2026 Aexvora. Developed by Aexvora.
+          </span>
         </footer>
       </section>
     </div>

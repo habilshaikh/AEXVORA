@@ -1,10 +1,9 @@
 'use client'
 
-import { Suspense, useRef, useMemo } from 'react'
+import { useRef, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { ScrollControls, Scroll, Stars, Sparkles } from '@react-three/drei'
+import { Stars, Sparkles } from '@react-three/drei'
 import * as THREE from 'three'
-import { Overlay } from './overlay'
 
 // 1. Digital Ocean (Flowing Particle Wave)
 function DataOcean() {
@@ -42,7 +41,7 @@ function DataOcean() {
   return (
     <points ref={ref} position={[0, -12, -20]} rotation={[Math.PI / 8, 0, 0]}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial size={0.15} color="#06b6d4" transparent opacity={0.6} sizeAttenuation />
     </points>
@@ -154,7 +153,7 @@ function AnimatedBackground() {
 
 export function Experience() {
   return (
-    <div className="fixed inset-0 h-screen w-full bg-black text-white">
+    <div className="pointer-events-none fixed inset-0 h-screen w-full bg-black text-white">
       <Canvas
         shadows
         dpr={[1, 2]}
@@ -168,14 +167,6 @@ export function Experience() {
         <spotLight position={[-10, 10, -5]} intensity={2} color="#ffffff" />
         
         <AnimatedBackground />
-
-        <Suspense fallback={null}>
-          <ScrollControls pages={6.5} damping={0.28}>
-            <Scroll html style={{ width: '100%' }}>
-              <Overlay />
-            </Scroll>
-          </ScrollControls>
-        </Suspense>
       </Canvas>
     </div>
   )
