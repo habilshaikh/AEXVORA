@@ -153,10 +153,10 @@ function AnimatedBackground() {
 
 export function Experience() {
   return (
-    <div className="pointer-events-none fixed inset-0 h-screen w-full bg-black text-white">
+    <div className="pointer-events-none fixed inset-0 h-[100dvh] w-full bg-black text-white">
       <Canvas
         shadows
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
         gl={{ antialias: true, powerPreference: 'high-performance' }}
         camera={{ position: [0, 1, 11], fov: 38 }}
       >

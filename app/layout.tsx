@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono, Cormorant_Garamond } from 'next/font/google'
+import { Geist_Mono, Cormorant_Garamond } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const geist = Geist({ subsets: ['latin'], variable: '--font-geist' })
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' })
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -12,10 +11,46 @@ const cormorant = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
-  title: 'Aexvora Services & Consulting',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aexvora.com'),
+  title: {
+    default: 'Aexvora | Digital Marketing & Website Development',
+    template: '%s | Aexvora',
+  },
   description:
-    'Comprehensive digital services including SEO, Ads Management, Influencer Marketing, and Data Intelligence Consulting.',
-  generator: 'v0.app',
+    'Grow your business with Aexvora digital marketing, SEO, GEO, AEO, website design, website development and paid advertising services.',
+  keywords: [
+    'digital marketing services',
+    'website development services',
+    'website design services',
+    'SEO services',
+    'GEO services',
+    'AEO services',
+  ],
+  applicationName: 'Aexvora',
+  category: 'Digital Marketing',
+  alternates: { canonical: '/' },
+  icons: {
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    shortcut: '/icon.svg',
+  },
+  openGraph: {
+    title: 'Aexvora | Digital Marketing & Website Development',
+    description: 'Digital marketing, SEO, GEO, AEO, website design and development services built to grow your business.',
+    url: '/',
+    siteName: 'Aexvora',
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Aexvora | Digital Marketing & Website Development',
+    description: 'Digital marketing, SEO, GEO, AEO, website design and development services built to grow your business.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
 }
 
 export const viewport: Viewport = {
@@ -31,7 +66,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-black text-white">
       <body
-        className={`${geist.variable} ${geistMono.variable} ${cormorant.variable} font-sans antialiased bg-black text-white`}
+        className={`${geistMono.variable} ${cormorant.variable} font-serif antialiased bg-black text-white`}
       >
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

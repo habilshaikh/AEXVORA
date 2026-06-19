@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import NextLink from 'next/link'
+import { serviceSlugFromName } from '@/lib/service-content'
 import {
   Search,
   MapPin,
@@ -15,6 +16,11 @@ import {
   Package,
   Database,
   FileText,
+  Megaphone,
+  Code2,
+  Palette,
+  Sparkles,
+  CircleHelp,
 } from 'lucide-react'
 
 const fade = {
@@ -25,11 +31,11 @@ const fade = {
 function Kicker({ children, dark }: { children: ReactNode; dark?: boolean }) {
   return (
     <span
-      className={`mb-3 inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-widest md:mb-6 ${
+      className={`mb-3 inline-flex max-w-full items-center gap-2 text-center text-[10px] font-medium uppercase tracking-widest sm:gap-3 sm:text-[11px] md:mb-6 ${
         dark ? 'text-white/60' : 'text-white/70'
       }`}
     >
-      <span className="h-px w-8 bg-white" />
+      <span className="h-px w-6 shrink-0 bg-white sm:w-8" />
       {children}
     </span>
   )
@@ -50,7 +56,7 @@ function Section({
         : 'items-start text-left'
 
   return (
-    <section className="flex min-h-[70vh] w-full snap-start scroll-mt-24 items-center px-6 py-16 md:h-screen md:px-16 md:py-0 lg:px-24">
+    <section className="flex min-h-[80svh] w-full snap-start scroll-mt-20 items-center px-4 py-14 sm:px-6 sm:py-16 md:min-h-screen md:px-12 md:py-0 lg:px-24">
       <div className={`flex w-full flex-col ${justify}`}>
         <div className="max-w-xl">{children}</div>
       </div>
@@ -94,7 +100,12 @@ const features = [
 ]
 
 const allServices = [
+  { name: 'Digital Marketing', icon: Megaphone, spec: 'Online Growth' },
+  { name: 'Website Development', icon: Code2, spec: 'Web Solutions' },
+  { name: 'Website Design', icon: Palette, spec: 'Creative Design' },
   { name: 'Search Engine Optimization (SEO)', icon: Search, spec: 'Organic Growth' },
+  { name: 'Generative Engine Optimization (GEO)', icon: Sparkles, spec: 'AI Visibility' },
+  { name: 'Answer Engine Optimization (AEO)', icon: CircleHelp, spec: 'Answer Search' },
   { name: 'Local SEO', icon: MapPin, spec: 'Local Dominance' },
   { name: 'Google Ads Management', icon: Target, spec: 'Paid Search' },
   { name: 'YouTube Ads Management', icon: Youtube, spec: 'Video Ads' },
@@ -115,6 +126,7 @@ export function Overlay() {
           initial="hidden"
           animate="show"
           transition={{ staggerChildren: 0.18, delayChildren: 0.2 }}
+          className="pt-28 sm:pt-36 md:pt-48"
         >
           <motion.div variants={fade} transition={{ duration: 0.8 }}>
             <Kicker>Aexvora Services & Consulting</Kicker>
@@ -122,7 +134,7 @@ export function Overlay() {
           <motion.h1
             variants={fade}
             transition={{ duration: 0.9 }}
-            className="text-balance font-serif text-6xl font-light leading-[0.95] text-white drop-shadow-2xl md:text-8xl lg:text-9xl"
+            className="text-balance font-serif text-5xl font-light leading-[0.95] text-white drop-shadow-2xl min-[375px]:text-6xl sm:text-7xl md:text-8xl lg:text-9xl"
           >
             Aexvora
             <br />
@@ -137,14 +149,14 @@ export function Overlay() {
           <motion.p
             variants={fade}
             transition={{ duration: 0.9 }}
-            className="mx-auto mt-4 max-w-md text-pretty text-base leading-relaxed text-white/70 md:mt-8 md:text-lg"
+            className="mx-auto mt-4 max-w-md text-pretty px-1 text-sm leading-relaxed text-white/70 sm:text-base md:mt-8 md:text-lg"
           >
             Engineered for scale. Reimagined for the modern web. Discover our premium suite of consulting and marketing services.
           </motion.p>
           <motion.div
             variants={fade}
             transition={{ duration: 0.9 }}
-            className="mt-8 flex flex-col items-center gap-3 md:mt-12"
+            className="mt-6 flex flex-col items-center gap-3 sm:mt-8 md:mt-12"
           >
             <span className="text-[10px] uppercase tracking-widest text-white/50">
               Scroll to reveal
@@ -166,7 +178,7 @@ export function Overlay() {
             whileInView="show"
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.8 }}
-            className="rounded-2xl border border-white/10 bg-neutral-900/40 p-6 backdrop-blur-xl md:rounded-3xl md:p-10"
+            className="w-full rounded-2xl border border-white/10 bg-neutral-900/40 p-5 backdrop-blur-xl sm:p-6 md:rounded-3xl md:p-10"
           >
             <motion.div
               animate={{ y: [0, -8, 0] }}
@@ -176,7 +188,7 @@ export function Overlay() {
               <f.icon className="h-5 w-5" />
             </motion.div>
             <Kicker dark={f.dark}>{f.tag}</Kicker>
-            <h2 className="text-balance font-serif text-4xl font-light leading-tight text-white md:text-6xl">
+            <h2 className="text-balance font-serif text-3xl font-light leading-tight text-white sm:text-4xl md:text-6xl">
               {f.title}
             </h2>
             <p className="mt-3 text-pretty leading-relaxed text-white/70 md:mt-5 md:text-lg">
@@ -194,7 +206,7 @@ export function Overlay() {
         </Section>
       ))}
 
-      <section id="about-section" className="flex min-h-[70vh] w-full snap-start scroll-mt-24 flex-col justify-center px-6 py-16 md:min-h-screen md:px-16 md:py-0 lg:px-24">
+      <section id="about-section" className="flex min-h-[70svh] w-full snap-start scroll-mt-20 flex-col justify-center px-4 py-14 sm:px-6 sm:py-16 md:min-h-screen md:px-12 md:py-0 lg:px-24">
         <motion.div
           variants={fade}
           initial="hidden"
@@ -204,7 +216,7 @@ export function Overlay() {
           className="max-w-3xl"
         >
           <Kicker dark>About Us</Kicker>
-          <h2 className="text-balance font-serif text-5xl font-light leading-tight text-white md:text-7xl">
+          <h2 className="text-balance font-serif text-4xl font-light leading-tight text-white sm:text-5xl md:text-7xl">
             Who we are.
           </h2>
           <p className="mt-3 text-pretty leading-relaxed text-white/70 md:mt-5 md:text-lg">
@@ -213,7 +225,7 @@ export function Overlay() {
         </motion.div>
       </section>
 
-      <section id="services-section" className="flex min-h-screen w-full snap-start scroll-mt-24 flex-col justify-center px-6 py-12 md:px-16 md:py-24 lg:px-24">
+      <section id="services-section" className="flex min-h-screen w-full snap-start scroll-mt-20 flex-col justify-center px-4 py-14 sm:px-6 md:px-12 md:py-24 lg:px-24">
         <motion.div
           variants={fade}
           initial="hidden"
@@ -223,7 +235,7 @@ export function Overlay() {
           className="mb-8 max-w-2xl md:mb-14"
         >
           <Kicker dark>All Services</Kicker>
-          <h2 className="text-balance font-serif text-5xl font-light leading-tight text-white md:text-7xl">
+          <h2 className="text-balance font-serif text-4xl font-light leading-tight text-white sm:text-5xl md:text-7xl">
             Elevate your business.
           </h2>
           <p className="mt-3 max-w-lg text-pretty leading-relaxed text-white/65 md:mt-5 md:text-lg">
@@ -241,7 +253,7 @@ export function Overlay() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, delay: i * 0.05 }}
               whileHover={{ y: -5 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/30 p-4 backdrop-blur-md md:rounded-3xl md:p-7"
+              className="group relative min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/30 p-4 backdrop-blur-md sm:p-5 md:rounded-3xl md:p-7"
             >
               <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-white/10 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
               <div className="mb-4 flex items-center justify-between md:mb-8">
@@ -250,13 +262,13 @@ export function Overlay() {
                 </span>
                 <p.icon className="h-4 w-4 text-white/70 transition-colors group-hover:text-white" />
               </div>
-              <h3 className="mt-2 font-serif text-lg font-light text-white md:mt-4 md:text-2xl">
+              <h3 className="mt-2 break-words font-serif text-xl font-light text-white md:mt-4 md:text-2xl">
                 {p.name}
               </h3>
               <div className="mt-4 flex translate-y-0 items-end justify-between opacity-100 transition-all duration-300 md:mt-8 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
-                <div className="flex w-full justify-between gap-2">
+                <div className="flex w-full flex-col justify-between gap-2 min-[360px]:flex-row">
                   <NextLink
-                    href={`/services/${encodeURIComponent(p.name.toLowerCase().replace(/ /g, '-'))}`}
+                    href={`/services/${serviceSlugFromName(p.name)}`}
                     className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-white transition-colors duration-300 hover:bg-white hover:text-black"
                   >
                     Explore

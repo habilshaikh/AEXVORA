@@ -79,7 +79,7 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-geist), 'Geist Fallback';
+  --font-sans: var(--font-cormorant), Georgia, serif;
   --font-mono: var(--font-geist-mono), 'Geist Mono Fallback';
   --font-serif: var(--font-cormorant), Georgia, serif;
   --color-espresso: var(--espresso);
@@ -133,6 +133,11 @@
   }
   html {
     scrollbar-width: none;
+    overflow-x: hidden;
+  }
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
   }
   ::-webkit-scrollbar {
     display: none;
